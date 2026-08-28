@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRAND: Track every strand. Build every habit.</title>
+<meta name="description" content="STRAND is a private-beta hair-care habit tracker. Join the waitlist to track your routine, scan products, and see your progress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cb-50:#f1f4f2;--cb-100:#e2e9e5;--cb-200:#c6d2cb;--cb-300:#a9bcb1;
+    --cb-400:#8da597;--cb-500:#708f7d;--cb-600:#5a7264;--cb-700:#43564b;
+    --cb-800:#2d3932;--cb-900:#161d19;--cb-950:#101412;
+    --ev-200:#c2d6ca;--ev-300:#a3c2af;--ev-400:#85ad95;--ev-500:#66997a;
+    --ev-600:#527a62;--ev-700:#3d5c49;--ev-800:#293d31;--ev-900:#141f18;--ev-950:#0e1511;
+    --mv-100:#f8d3e9;--mv-200:#f0a8d3;--mv-300:#e97cbd;--mv-400:#e151a7;
+    --mv-500:#da2592;--mv-600:#ae1e74;--mv-700:#831657;--mv-800:#570f3a;--mv-900:#2c071d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cb-950);
+    color:var(--cb-200);
+    font-family:'DM Mono',monospace;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ev-400);font-weight:500;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:300;color:var(--cb-50);letter-spacing:-.02em;}
+
+  /* ---------- nav ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(16,20,18,.85);backdrop-filter:blur(10px);border-bottom:.5px solid var(--cb-800);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1080px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-mark{width:34px;height:34px;border-radius:9px;background:var(--ev-800);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:18px;color:var(--cb-50);flex-shrink:0;}
+  .logo-word{font-family:'Fraunces',serif;font-size:19px;color:var(--cb-50);letter-spacing:.02em;}
+  .nav-cta{background:var(--mv-700);color:var(--mv-100);border:none;border-radius:7px;padding:10px 18px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:background .15s;}
+  .nav-cta:hover{background:var(--mv-600);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 24px 80px;position:relative;}
+  .hero::before{
+    content:'';position:absolute;top:-80px;right:8%;
+    width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(closest-side, rgba(102,153,122,.18), transparent 72%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,640px);
+    gap:36px 24px;align-items:center;
+  }
+  .hero-inner{max-width:540px;}
+  .hero .eyebrow{display:block;margin-bottom:18px;}
+  .hero h1{font-size:clamp(34px,6vw,56px);line-height:1.08;margin-bottom:20px;}
+  .hero p.sub{font-size:15.5px;color:var(--cb-400);max-width:480px;margin:0 0 36px;line-height:1.7;}
+
+  .waitlist-form{display:flex;gap:10px;max-width:420px;}
+  .waitlist-form input[type=email]{
+    flex:1;min-width:0;background:var(--cb-900);border:.5px solid var(--cb-700);border-radius:8px;
+    color:var(--cb-100);font-family:'DM Mono',monospace;font-size:14px;padding:14px 16px;outline:none;
+    transition:border-color .15s;
+  }
+  .waitlist-form input[type=email]:focus{border-color:var(--ev-500);}
+  .waitlist-form input[type=email]::placeholder{color:var(--cb-600);}
+  .waitlist-form button{
+    background:var(--mv-700);color:var(--mv-100);border:none;border-radius:8px;padding:14px 20px;
+    font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+    font-family:'DM Mono',monospace;white-space:nowrap;transition:background .15s;
+  }
+  .waitlist-form button:hover{background:var(--mv-600);}
+  .waitlist-form button:disabled{opacity:.65;cursor:not-allowed;}
+  .form-note{font-size:11.5px;color:var(--cb-600);margin-top:14px;letter-spacing:.02em;}
+  .form-success{display:none;max-width:420px;background:var(--ev-900);border:.5px solid var(--ev-700);border-radius:8px;padding:16px 18px;font-size:13px;color:var(--ev-300);}
+  .form-error{font-size:12px;color:var(--mv-300);margin-top:10px;display:none;}
+  .cta-band .waitlist-form,
+  .cta-band .form-error,
+  .cta-band .form-success{margin-left:auto;margin-right:auto;}
+
+  /* ---------- device mockup ---------- */
+  .phone-scene{
+    perspective:1100px;
+    transform-style:preserve-3d;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    width:100%;
+    min-height:580px;
+    padding:8px 8px 40px 0;
+  }
+  .phone{
+    flex-shrink:0;
+    position:relative;
+    transform-style:preserve-3d;
+  }
+  .phone-front{
+    width:236px;height:484px;
+    margin-top:8px;
+    margin-right:28px;
+    z-index:2;
+    transform:rotateY(-14deg) rotateX(3deg);
+  }
+  .phone-back{
+    width:236px;height:484px;
+    margin-top:72px;
+    z-index:1;
+    transform:rotateY(14deg) rotateX(3deg);
+  }
+  .phone-back .phone-body{
+    box-shadow:
+      18px 40px 70px rgba(0,0,0,.42),
+      0 12px 24px rgba(0,0,0,.22),
+      inset 0 1px 1px rgba(255,255,255,.22),
+      inset 0 -1px 2px rgba(0,0,0,.5);
+  }
+  .phone-btn{position:absolute;background:linear-gradient(180deg,#8d8b87,#4a4947);border-radius:2px;}
+  .phone-btn.mute{left:-3px;top:92px;width:3px;height:28px;}
+  .phone-btn.vol-up{left:-3px;top:132px;width:3px;height:52px;}
+  .phone-btn.vol-down{left:-3px;top:192px;width:3px;height:52px;}
+  .phone-btn.power{right:-3px;top:168px;width:3px;height:78px;}
+  .phone-body{
+    width:100%;height:100%;
+    background:linear-gradient(155deg,#7a7874 0%,#3a3a3c 18%,#1d1d1f 55%,#2a2a2c 100%);
+    border-radius:46px;padding:11px;position:relative;
+    box-shadow:
+      32px 54px 90px rgba(0,0,0,.5),
+      0 18px 36px rgba(0,0,0,.28),
+      inset 0 1px 1px rgba(255,255,255,.28),
+      inset 0 -1px 2px rgba(0,0,0,.55);
+  }
+  .phone-screen{
+    width:100%;height:100%;border-radius:36px;overflow:hidden;
+    background:#101412;position:relative;
+  }
+  .phone-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+  .island{
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    width:92px;height:27px;background:#050505;border-radius:16px;z-index:2;
+    box-shadow:0 0 0 1px rgba(255,255,255,.06);
+  }
+  .phone-back .island{width:84px;height:24px;top:9px;}
+  .phone-back .island::after{width:8px;height:8px;right:9px;}
+
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:12px;}
+    .hero-inner{max-width:640px;margin:0 auto;text-align:center;}
+    .hero p.sub,.waitlist-form,.form-success{margin-left:auto;margin-right:auto;}
+    .phone-scene{min-height:520px;padding:4px 0 28px;}
+    .phone-front{width:196px;height:402px;margin-top:6px;margin-right:20px;}
+    .phone-back{width:196px;height:402px;margin-top:56px;}
+  }
+  @media (max-width:420px){
+    .phone-scene{min-height:430px;}
+    .phone-front{width:164px;height:336px;margin-top:4px;margin-right:14px;}
+    .phone-back{width:164px;height:336px;margin-top:44px;}
+  }
+  @media (max-width:520px){
+    .waitlist-form{flex-direction:column;}
+  }
+
+  /* ---------- features ---------- */
+  .features{padding:20px 24px 100px;}
+  .features-head{text-align:center;max-width:560px;margin:0 auto 56px;}
+  .features-head h2{font-size:clamp(26px,4.5vw,36px);margin-top:14px;}
+  .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media (max-width:720px){.feature-grid{grid-template-columns:1fr;}}
+  .feature-card{
+    background:var(--cb-900);border:.5px solid var(--cb-800);border-radius:14px;padding:28px;
+    transition:border-color .2s;
+  }
+  .feature-card:hover{border-color:var(--cb-700);}
+  .feature-icon{width:42px;height:42px;border-radius:10px;background:var(--ev-900);border:.5px solid var(--ev-800);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .feature-card h3{font-size:18px;font-weight:400;color:var(--cb-50);margin-bottom:8px;}
+  .feature-card p{font-size:13.5px;color:var(--cb-500);line-height:1.65;}
+
+  /* ---------- how it works ---------- */
+  .how{padding:20px 24px 110px;}
+  .how-inner{max-width:800px;margin:0 auto;}
+  .features-head + .how-inner{margin-top:0;}
+  .how h2{text-align:center;font-size:clamp(26px,4.5vw,36px);margin-bottom:56px;}
+  .step-row{display:flex;gap:20px;padding:26px 0;border-top:.5px solid var(--cb-800);}
+  .step-row:last-child{border-bottom:.5px solid var(--cb-800);}
+  .step-num{font-family:'Fraunces',serif;font-size:22px;color:var(--ev-500);flex-shrink:0;width:46px;}
+  .step-text h3{font-size:16px;font-weight:400;color:var(--cb-50);margin-bottom:6px;}
+  .step-text p{font-size:13.5px;color:var(--cb-500);max-width:520px;}
+
+  /* ---------- cta band ---------- */
+  .cta-band{
+    margin:0 24px 110px;border-radius:20px;padding:64px 32px;text-align:center;
+    background:linear-gradient(160deg,var(--ev-900),var(--mv-900));
+    border:.5px solid var(--cb-800);
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .cta-band h2{font-size:clamp(26px,5vw,38px);max-width:520px;margin:0 auto 14px;}
+  .cta-band p{font-size:14px;color:var(--cb-300);max-width:440px;margin:0 auto 32px;}
+  .cta-band .waitlist-form{width:100%;max-width:420px;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:.5px solid var(--cb-800);padding:36px 24px;}
+  .footer-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .footer-links{display:flex;gap:22px;font-size:12px;color:var(--cb-600);}
+  .footer-links a{text-decoration:none;transition:color .15s;}
+  .footer-links a:hover{color:var(--cb-400);}
+  .footer-copy{font-size:12px;color:var(--cb-700);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="logo">
+      <span class="logo-mark">S</span>
+      <span class="logo-word">STRAND</span>
+    </a>
+    <a href="#waitlist" class="nav-cta">Join waitlist</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-inner">
+        <span class="eyebrow">Private beta &middot; opening soon</span>
+        <h1>Track every strand.<br>Build every habit.</h1>
+        <p class="sub">STRAND is a quiet, focused habit tracker built around your hair care routine: the products you use, the rituals you keep, and the progress you can actually see.</p>
+
+        <form class="waitlist-form" id="waitlistForm" novalidate>
+          <input type="email" id="emailInput" placeholder="you@email.com" autocomplete="email" required>
+          <button type="submit">Get early access</button>
+        </form>
+        <p class="form-error" id="formError">Enter a valid email to join the waitlist.</p>
+        <p class="form-note" id="formNote">No spam. One email the day we open access.</p>
+        <div class="form-success" id="formSuccess">You're on the list. We'll email you the moment STRAND opens up.</div>
+      </div>
+
+      <div class="phone-scene">
+        <div class="phone phone-front">
+          <span class="phone-btn mute"></span>
+          <span class="phone-btn vol-up"></span>
+          <span class="phone-btn vol-down"></span>
+          <span class="phone-btn power"></span>
+          <div class="phone-body">
+            <div class="phone-screen">
+              <img src="mockups/wash-claire.png" alt="STRAND home screen greeting Claire, with a log wash day prompt">
+              <span class="island"></span>
+            </div>
+          </div>
+        </div>
+        <div class="phone phone-back">
+          <span class="phone-btn mute"></span>
+          <span class="phone-btn vol-up"></span>
+          <span class="phone-btn vol-down"></span>
+          <span class="phone-btn power"></span>
+          <div class="phone-body">
+            <div class="phone-screen">
+              <img src="mockups/log-wash.png" alt="STRAND log wash day screen with condition tags and product fields">
+              <span class="island"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="wrap">
+      <div class="features-head">
+        <span class="eyebrow">What you get</span>
+        <h2>Everything your routine needed, in one place</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <h3>Daily rituals & streaks</h3>
+          <p>Log wash days, deep conditioning, and every daily habit, then watch your insights grow as consistency builds.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 11h18"/></svg>
+          </div>
+          <h3>Scan & save products</h3>
+          <p>Point your camera at a barcode to save what you're using, track how it performs, and build a product shelf you can actually trust.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+          </div>
+          <h3>Photo journal</h3>
+          <p>Capture your hair's progress over time in a private journal, side by side with the habits and products behind the change.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <h3>Reminders that fit</h3>
+          <p>Gentle nudges timed to your routine, not a generic schedule, so wash day never quietly slips.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap how-inner">
+      <h2>How it works</h2>
+      <div class="step-row">
+        <div class="step-num">01</div>
+        <div class="step-text">
+          <h3>Set up your routine</h3>
+          <p>Tell STRAND what your hair needs (wash frequency, products, daily habits) and it builds your habit list around it.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">02</div>
+        <div class="step-text">
+          <h3>Check in as you go</h3>
+          <p>Mark habits done, scan a new product, or drop in a quick photo. It takes seconds and it's built to fit around your day.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">03</div>
+        <div class="step-text">
+          <h3>Watch the pattern form</h3>
+          <p>Streaks, stats, and your journal come together so you can see, not guess, what's actually working for your hair.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="waitlist">
+    <h2>Be first to try STRAND</h2>
+    <p>We're letting people in gradually as we open the private beta. Join the waitlist and we'll email you the moment there's a spot.</p>
+    <form class="waitlist-form" id="waitlistForm2" novalidate>
+      <input type="email" id="emailInput2" placeholder="you@email.com" autocomplete="email" required>
+      <button type="submit">Get early access</button>
+    </form>
+    <p class="form-error" id="formError2">Enter a valid email to join the waitlist.</p>
+    <div class="form-success" id="formSuccess2">You're on the list. We'll email you the moment STRAND opens up.</div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark" style="width:26px;height:26px;font-size:14px;border-radius:7px;">S</span>
+      <span class="logo-word" style="font-size:15px;">STRAND</span>
+    </a>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:hello@strand.app">Contact</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 STRAND. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  var WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbyfPQL_LjpESpVS6HwH-P3sUKF0rPbhamZ_w3zF1EfEbEDyLFe6mRsrpNYheSZsbmZO/exec";
+
+  function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+  function wireForm(formId, inputId, errorId, successId){
+    var form = document.getElementById(formId);
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var input = document.getElementById(inputId);
+      var error = document.getElementById(errorId);
+      var success = document.getElementById(successId);
+      var button = form.querySelector("button[type=submit]");
+      var email = input.value.trim();
+
+      if(!isValidEmail(email)){
+        error.textContent = "Enter a valid email to join the waitlist.";
+        error.style.display = "block";
+        return;
+      }
+      error.style.display = "none";
+
+      var originalLabel = button.textContent;
+      button.disabled = true;
+      button.textContent = "Joining...";
+
+      try{
+        await fetch(WAITLIST_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ email: email })
+        });
+
+        form.style.display = "none";
+        var note = document.getElementById("formNote");
+        if(note && formId === "waitlistForm") note.style.display = "none";
+        success.style.display = "block";
+      }catch(err){
+        console.error(err);
+        error.textContent = "Something went wrong. Please try again.";
+        error.style.display = "block";
+        button.disabled = false;
+        button.textContent = originalLabel;
+      }
+    });
+  }
+
+  wireForm("waitlistForm", "emailInput", "formError", "formSuccess");
+  wireForm("waitlistForm2", "emailInput2", "formError2", "formSuccess2");
+</script>
+
+</body>
+</html>
