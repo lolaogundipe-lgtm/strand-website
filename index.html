@@ -231,7 +231,7 @@
         <p class="sub">STRAND is a quiet, focused habit tracker built around your hair care routine: the products you use, the rituals you keep, and the progress you can actually see.</p>
 
         <form class="waitlist-form" id="waitlistForm" novalidate>
-          <input type="email" id="emailInput" placeholder="you@email.com" autocomplete="email" required>
+          <input type="email" id="emailInput" name="email" placeholder="you@email.com" autocomplete="email" required>
           <button type="submit">Get early access</button>
         </form>
         <p class="form-error" id="formError">Enter a valid email to join the waitlist.</p>
@@ -338,7 +338,7 @@
     <h2>Be first to try STRAND</h2>
     <p>We're letting people in gradually as we open the private beta. Join the waitlist and we'll email you the moment there's a spot.</p>
     <form class="waitlist-form" id="waitlistForm2" novalidate>
-      <input type="email" id="emailInput2" placeholder="you@email.com" autocomplete="email" required>
+      <input type="email" id="emailInput2" name="email" placeholder="you@email.com" autocomplete="email" required>
       <button type="submit">Get early access</button>
     </form>
     <p class="form-error" id="formError2">Enter a valid email to join the waitlist.</p>
@@ -387,12 +387,14 @@
       button.textContent = "Joining...";
 
       try{
-        await fetch(WAITLIST_ENDPOINT, {
+        var response = await fetch(WAITLIST_ENDPOINT + "?email=" + encodeURIComponent(email), {
           method: "POST",
-          mode: "no-cors",
+          redirect: "follow",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ email: email })
         });
+
+        if(!response.ok) throw new Error("Waitlist request failed");
 
         form.style.display = "none";
         var note = document.getElementById("formNote");
