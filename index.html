@@ -17,6 +17,9 @@
     --ev-600:#527a62;--ev-700:#3d5c49;--ev-800:#293d31;--ev-900:#141f18;--ev-950:#0e1511;
     --mv-100:#f8d3e9;--mv-200:#f0a8d3;--mv-300:#e97cbd;--mv-400:#e151a7;
     --mv-500:#da2592;--mv-600:#ae1e74;--mv-700:#831657;--mv-800:#570f3a;--mv-900:#2c071d;
+    --radius-xl:40px;
+    --radius-lg:24px;
+    --border-subtle:rgba(241,244,242,.08);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -29,306 +32,413 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-  a{color:inherit;}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
-  .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ev-400);font-weight:500;}
-  h1,h2,h3{font-family:'Fraunces',serif;font-weight:300;color:var(--cb-50);letter-spacing:-.02em;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:300;color:var(--cb-50);letter-spacing:-.02em;}
 
-  /* ---------- nav ---------- */
-  header{position:sticky;top:0;z-index:50;background:rgba(16,20,18,.85);backdrop-filter:blur(10px);border-bottom:.5px solid var(--cb-800);}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1080px;margin:0 auto;}
-  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-  .logo-mark{width:34px;height:34px;border-radius:9px;background:var(--ev-800);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:18px;color:var(--cb-50);flex-shrink:0;}
-  .logo-word{font-family:'Fraunces',serif;font-size:19px;color:var(--cb-50);letter-spacing:.02em;}
-  .nav-cta{background:var(--mv-700);color:var(--mv-100);border:none;border-radius:7px;padding:10px 18px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:background .15s;}
-  .nav-cta:hover{background:var(--mv-600);}
+  .pill-label{
+    font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ev-400);margin-bottom:8px;display:block;
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:14px 24px;border-radius:100px;font-weight:500;font-size:12.5px;
+    letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+    transition:background .15s,transform .2s cubic-bezier(.2,0,0,1),opacity .2s;
+    border:none;text-decoration:none;font-family:'DM Mono',monospace;
+  }
+  .btn-primary{background:var(--mv-700);color:var(--mv-100);}
+  .btn-primary:hover{background:var(--mv-600);}
+  .btn-evergreen{background:var(--ev-800);color:var(--ev-200);}
+  .btn-evergreen:hover{background:var(--ev-700);}
+  .btn:disabled{opacity:.65;cursor:not-allowed;}
+
+  /* ---------- header ---------- */
+  header{
+    padding:28px 40px;display:flex;justify-content:space-between;align-items:center;
+    position:absolute;left:0;right:0;z-index:10;
+  }
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-mark{
+    width:34px;height:34px;border-radius:9px;background:var(--ev-800);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:18px;color:var(--cb-50);flex-shrink:0;
+  }
+  .logo-word{font-family:'Fraunces',serif;font-size:19px;color:var(--cb-50);letter-spacing:.02em;font-weight:300;}
 
   /* ---------- hero ---------- */
-  .hero{padding:64px 24px 80px;position:relative;}
-  .hero::before{
-    content:'';position:absolute;top:-80px;right:8%;
-    width:520px;height:520px;border-radius:50%;
-    background:radial-gradient(closest-side, rgba(102,153,122,.18), transparent 72%);
+  .hero{
+    display:flex;min-height:90vh;padding:20px;gap:20px;min-width:0;
+  }
+  .hero-visual{
+    flex:1.2;min-width:0;background:var(--cb-900);border-radius:var(--radius-xl);
+    position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:72px;overflow:hidden;
+    border:.5px solid var(--cb-800);
+  }
+  .hero-visual::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(closest-side at 70% 20%, rgba(102,153,122,.22), transparent 70%),
+      radial-gradient(closest-side at 20% 80%, rgba(131,22,87,.16), transparent 65%);
     pointer-events:none;
   }
-  .hero-grid{
-    position:relative;max-width:1280px;margin:0 auto;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,640px);
-    gap:36px 24px;align-items:center;
+  .dna-pattern{
+    position:absolute;top:56px;left:64px;
+    display:grid;grid-template-columns:repeat(3,72px);gap:12px;
+    z-index:1;
   }
-  .hero-inner{max-width:540px;}
-  .hero .eyebrow{display:block;margin-bottom:18px;}
-  .hero h1{font-size:clamp(34px,6vw,56px);line-height:1.08;margin-bottom:20px;}
-  .hero p.sub{font-size:15.5px;color:var(--cb-400);max-width:480px;margin:0 0 36px;line-height:1.7;}
+  .shape{
+    width:72px;height:72px;
+    background:linear-gradient(180deg,var(--cb-700),var(--cb-950));
+    border-radius:36px 36px 0 0;
+  }
+  .shape.alt{
+    border-radius:0 0 36px 36px;
+    background:linear-gradient(0deg,var(--cb-700),var(--cb-950));
+  }
+  .shape.accent{
+    background:var(--mv-700);
+    border-radius:36px;
+  }
+  .hero-visual h1{
+    position:relative;z-index:1;
+    font-size:clamp(36px,5vw,56px);line-height:1.08;
+    max-width:520px;
+  }
+  .hero-content{
+    flex:1;min-width:0;background:var(--cb-900);border-radius:var(--radius-xl);
+    display:flex;flex-direction:column;justify-content:center;
+    padding:64px;border:.5px solid var(--cb-800);
+  }
+  .hero-content h2{
+    font-size:clamp(28px,3.5vw,40px);line-height:1.15;
+    margin-bottom:28px;max-width:420px;
+  }
+  .hero-content .sub{
+    font-size:14px;color:var(--cb-400);max-width:400px;margin:0 0 28px;line-height:1.7;
+  }
 
-  .waitlist-form{display:flex;gap:10px;max-width:420px;}
-  .waitlist-form input[type=email]{
-    flex:1;min-width:0;background:var(--cb-900);border:.5px solid var(--cb-700);border-radius:8px;
-    color:var(--cb-100);font-family:'DM Mono',monospace;font-size:14px;padding:14px 16px;outline:none;
-    transition:border-color .15s;
+  .waitlist-form{
+    display:flex;gap:10px;background:var(--cb-950);
+    padding:8px;border-radius:100px;max-width:480px;
+    border:.5px solid var(--cb-800);width:100%;
   }
-  .waitlist-form input[type=email]:focus{border-color:var(--ev-500);}
+  .waitlist-form input[type=email]{
+    flex:1;min-width:0;background:transparent;border:none;
+    padding:0 20px;font-size:14px;outline:none;
+    color:var(--cb-100);font-family:'DM Mono',monospace;font-weight:300;
+  }
   .waitlist-form input[type=email]::placeholder{color:var(--cb-600);}
   .waitlist-form button{
-    background:var(--mv-700);color:var(--mv-100);border:none;border-radius:8px;padding:14px 20px;
-    font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-    font-family:'DM Mono',monospace;white-space:nowrap;transition:background .15s;
+    background:var(--mv-700);color:var(--mv-100);border:none;border-radius:100px;
+    padding:14px 20px;font-size:12px;font-weight:500;letter-spacing:.08em;
+    text-transform:uppercase;cursor:pointer;font-family:'DM Mono',monospace;
+    white-space:nowrap;transition:background .15s;
   }
   .waitlist-form button:hover{background:var(--mv-600);}
   .waitlist-form button:disabled{opacity:.65;cursor:not-allowed;}
-  .form-note{font-size:11.5px;color:var(--cb-600);margin-top:14px;letter-spacing:.02em;}
-  .form-success{display:none;max-width:420px;background:var(--ev-900);border:.5px solid var(--ev-700);border-radius:8px;padding:16px 18px;font-size:13px;color:var(--ev-300);}
+  .form-note{font-size:12px;color:var(--cb-600);margin-top:18px;letter-spacing:.02em;}
+  .form-success{
+    display:none;max-width:480px;background:var(--ev-900);
+    border:.5px solid var(--ev-700);border-radius:14px;padding:16px 18px;
+    font-size:13px;color:var(--ev-300);
+  }
   .form-error{font-size:12px;color:var(--mv-300);margin-top:10px;display:none;}
-  .cta-band .waitlist-form,
-  .cta-band .form-error,
-  .cta-band .form-success{margin-left:auto;margin-right:auto;}
 
-  /* ---------- device mockup ---------- */
-  .phone-scene{
-    perspective:1100px;
-    transform-style:preserve-3d;
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    width:100%;
-    min-height:580px;
-    padding:8px 8px 40px 0;
-  }
-  .phone{
-    flex-shrink:0;
-    position:relative;
-    transform-style:preserve-3d;
-  }
-  .phone-front{
-    width:236px;height:484px;
-    margin-top:8px;
-    margin-right:28px;
-    z-index:2;
-    transform:rotateY(-14deg) rotateX(3deg);
-  }
-  .phone-back{
-    width:236px;height:484px;
-    margin-top:72px;
-    z-index:1;
-    transform:rotateY(14deg) rotateX(3deg);
-  }
-  .phone-back .phone-body{
-    box-shadow:
-      18px 40px 70px rgba(0,0,0,.42),
-      0 12px 24px rgba(0,0,0,.22),
-      inset 0 1px 1px rgba(255,255,255,.22),
-      inset 0 -1px 2px rgba(0,0,0,.5);
-  }
-  .phone-btn{position:absolute;background:linear-gradient(180deg,#8d8b87,#4a4947);border-radius:2px;}
-  .phone-btn.mute{left:-3px;top:92px;width:3px;height:28px;}
-  .phone-btn.vol-up{left:-3px;top:132px;width:3px;height:52px;}
-  .phone-btn.vol-down{left:-3px;top:192px;width:3px;height:52px;}
-  .phone-btn.power{right:-3px;top:168px;width:3px;height:78px;}
-  .phone-body{
-    width:100%;height:100%;
-    background:linear-gradient(155deg,#7a7874 0%,#3a3a3c 18%,#1d1d1f 55%,#2a2a2c 100%);
-    border-radius:46px;padding:11px;position:relative;
-    box-shadow:
-      32px 54px 90px rgba(0,0,0,.5),
-      0 18px 36px rgba(0,0,0,.28),
-      inset 0 1px 1px rgba(255,255,255,.28),
-      inset 0 -1px 2px rgba(0,0,0,.55);
-  }
-  .phone-screen{
-    width:100%;height:100%;border-radius:36px;overflow:hidden;
-    background:#101412;position:relative;
-  }
-  .phone-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
-  .island{
-    position:absolute;top:10px;left:50%;transform:translateX(-50%);
-    width:92px;height:27px;background:#050505;border-radius:16px;z-index:2;
-    box-shadow:0 0 0 1px rgba(255,255,255,.06);
-  }
-  .phone-back .island{width:84px;height:24px;top:9px;}
-  .phone-back .island::after{width:8px;height:8px;right:9px;}
-
-  @media (max-width:980px){
-    .hero-grid{grid-template-columns:1fr;gap:12px;}
-    .hero-inner{max-width:640px;margin:0 auto;text-align:center;}
-    .hero p.sub,.waitlist-form,.form-success{margin-left:auto;margin-right:auto;}
-    .phone-scene{min-height:520px;padding:4px 0 28px;}
-    .phone-front{width:196px;height:402px;margin-top:6px;margin-right:20px;}
-    .phone-back{width:196px;height:402px;margin-top:56px;}
-  }
-  @media (max-width:420px){
-    .phone-scene{min-height:430px;}
-    .phone-front{width:164px;height:336px;margin-top:4px;margin-right:14px;}
-    .phone-back{width:164px;height:336px;margin-top:44px;}
-  }
-  @media (max-width:520px){
-    .waitlist-form{flex-direction:column;}
+  /* ---------- sections ---------- */
+  .section-grid{
+    padding:80px 40px;display:grid;grid-template-columns:1fr 1fr;
+    gap:48px;max-width:1400px;margin:0 auto;
   }
 
-  /* ---------- features ---------- */
-  .features{padding:20px 24px 100px;}
-  .features-head{text-align:center;max-width:560px;margin:0 auto 56px;}
-  .features-head h2{font-size:clamp(26px,4.5vw,36px);margin-top:14px;}
-  .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  @media (max-width:720px){.feature-grid{grid-template-columns:1fr;}}
-  .feature-card{
-    background:var(--cb-900);border:.5px solid var(--cb-800);border-radius:14px;padding:28px;
-    transition:border-color .2s;
+  .data-card{
+    background:var(--cb-900);border-radius:var(--radius-xl);
+    padding:40px;position:relative;border:.5px solid var(--cb-800);
   }
-  .feature-card:hover{border-color:var(--cb-700);}
-  .feature-icon{width:42px;height:42px;border-radius:10px;background:var(--ev-900);border:.5px solid var(--ev-800);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
-  .feature-card h3{font-size:18px;font-weight:400;color:var(--cb-50);margin-bottom:8px;}
-  .feature-card p{font-size:13.5px;color:var(--cb-500);line-height:1.65;}
+  .growth-metric{
+    font-family:'Fraunces',serif;font-weight:300;
+    font-size:clamp(44px,6vw,56px);letter-spacing:-.02em;color:var(--cb-50);
+  }
+  .growth-metric span{font-size:.55em;opacity:.45;color:var(--ev-400);}
+  .chart-container{
+    height:220px;margin-top:36px;position:relative;
+    border-bottom:1.5px solid var(--cb-700);
+    border-left:1.5px solid var(--cb-700);
+  }
+  .line-growth{position:absolute;bottom:0;left:0;width:100%;height:100%;}
+  .legend-dot{
+    width:8px;height:8px;border-radius:50%;display:inline-block;
+  }
 
-  /* ---------- how it works ---------- */
-  .how{padding:20px 24px 110px;}
-  .how-inner{max-width:800px;margin:0 auto;}
-  .features-head + .how-inner{margin-top:0;}
-  .how h2{text-align:center;font-size:clamp(26px,4.5vw,36px);margin-bottom:56px;}
-  .step-row{display:flex;gap:20px;padding:26px 0;border-top:.5px solid var(--cb-800);}
-  .step-row:last-child{border-bottom:.5px solid var(--cb-800);}
-  .step-num{font-family:'Fraunces',serif;font-size:22px;color:var(--ev-500);flex-shrink:0;width:46px;}
-  .step-text h3{font-size:16px;font-weight:400;color:var(--cb-50);margin-bottom:6px;}
-  .step-text p{font-size:13.5px;color:var(--cb-500);max-width:520px;}
+  .user-feed{display:flex;flex-direction:column;gap:8px;}
+  .user-row{
+    display:flex;align-items:center;gap:16px;
+    padding:16px 0;border-bottom:.5px solid var(--cb-800);
+  }
+  .avatar{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--ev-900);border:.5px solid var(--ev-800);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:500;font-size:12px;color:var(--ev-300);flex-shrink:0;
+  }
+  .user-info h4{font-size:15px;font-weight:400;margin-bottom:2px;}
+  .user-info p{font-size:12.5px;color:var(--cb-500);}
+  .tag{
+    margin-left:auto;font-size:12px;font-weight:500;
+    color:var(--ev-400);letter-spacing:.04em;white-space:nowrap;
+  }
 
+  .feature-stack{display:flex;flex-direction:column;}
+  .feature-stack .pill-label{position:relative;z-index:3;margin-bottom:28px;}
+  .stack-item{
+    background:var(--cb-900);border-radius:var(--radius-lg);
+    padding:28px 32px;margin-bottom:-36px;
+    border:.5px solid var(--cb-800);
+    box-shadow:0 -12px 32px rgba(0,0,0,.25);
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    transition:transform .3s ease;position:relative;
+  }
+  .stack-item:last-child{margin-bottom:0;}
+  .stack-item:hover{transform:translateY(-8px);z-index:2;}
+  .stack-item.accent{background:var(--mv-800);border-color:var(--mv-700);color:var(--mv-100);}
+  .stack-item.accent .stack-desc{color:var(--mv-200);opacity:.85;}
+  .stack-item.dark{background:var(--ev-900);border-color:var(--ev-800);color:var(--cb-50);}
+  .stack-item.dark .stack-desc{color:var(--ev-300);opacity:.8;}
+  .stack-item-tab{
+    width:100px;height:20px;background:inherit;position:absolute;
+    top:-20px;left:36px;border-radius:10px 10px 0 0;
+    border:.5px solid var(--cb-800);border-bottom:none;
+  }
+  .stack-item.accent .stack-item-tab{border-color:var(--mv-700);}
+  .stack-item.dark .stack-item-tab{border-color:var(--ev-800);}
+  .stack-item h4{font-size:17px;font-weight:400;margin-bottom:4px;}
+  .stack-desc{font-size:13px;color:var(--cb-500);line-height:1.5;}
+  .stack-num{
+    font-family:'Fraunces',serif;font-size:22px;color:var(--ev-500);
+    flex-shrink:0;letter-spacing:-.02em;
+  }
+  .stack-item.accent .stack-num{color:var(--mv-200);}
+  .stack-item.dark .stack-num{color:var(--ev-400);}
+
+  .precision-copy{position:relative;z-index:1;}
+  .precision-copy h3{
+    font-size:clamp(26px,3vw,32px);margin-bottom:18px;max-width:420px;
+  }
+  .precision-copy p{
+    color:var(--cb-400);line-height:1.7;margin-bottom:28px;max-width:440px;font-size:14px;
+  }
   /* ---------- cta band ---------- */
   .cta-band{
-    margin:0 24px 110px;border-radius:20px;padding:64px 32px;text-align:center;
+    margin:20px 40px 80px;border-radius:var(--radius-xl);padding:64px 40px;text-align:center;
     background:linear-gradient(160deg,var(--ev-900),var(--mv-900));
     border:.5px solid var(--cb-800);
     display:flex;flex-direction:column;align-items:center;
   }
   .cta-band h2{font-size:clamp(26px,5vw,38px);max-width:520px;margin:0 auto 14px;}
-  .cta-band p{font-size:14px;color:var(--cb-300);max-width:440px;margin:0 auto 32px;}
-  .cta-band .waitlist-form{width:100%;max-width:420px;}
+  .cta-band > p{font-size:14px;color:var(--cb-300);max-width:440px;margin:0 auto 28px;}
+  .cta-band .waitlist-form{margin:0 auto;}
+  .cta-band .form-error,
+  .cta-band .form-success{margin-left:auto;margin-right:auto;}
 
   /* ---------- footer ---------- */
-  footer{border-top:.5px solid var(--cb-800);padding:36px 24px;}
-  .footer-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  footer{
+    padding:40px;border-top:.5px solid var(--cb-800);
+  }
+  .footer-inner{
+    max-width:1400px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  }
   .footer-links{display:flex;gap:22px;font-size:12px;color:var(--cb-600);}
-  .footer-links a{text-decoration:none;transition:color .15s;}
+  .footer-links a{transition:color .15s;}
   .footer-links a:hover{color:var(--cb-400);}
   .footer-copy{font-size:12px;color:var(--cb-700);}
+
+  @media (max-width:1024px){
+    header{padding:20px 24px;}
+    .hero{flex-direction:column;min-height:auto;padding:16px;width:100%;}
+    .hero-visual,.hero-content{width:100%;flex:none;}
+    .hero-content h2,.hero-content .sub,.hero-visual h1{max-width:100%;}
+    .hero-visual{padding:56px 36px 48px;min-height:420px;}
+    .dna-pattern{top:40px;left:36px;grid-template-columns:repeat(3,56px);gap:10px;}
+    .shape{width:56px;height:56px;}
+    .hero-content{padding:40px 32px;}
+    .section-grid{grid-template-columns:1fr;padding:56px 24px;gap:40px;}
+    .precision-copy{margin-top:28px;}
+    .cta-band{margin:8px 24px 64px;padding:48px 24px;}
+    footer{padding:32px 24px;}
+  }
+  @media (max-width:560px){
+    header{padding:16px 16px;width:100%;box-sizing:border-box;}
+    header .btn{padding:12px 14px;font-size:11px;letter-spacing:.06em;}
+    .waitlist-form{flex-direction:column;border-radius:20px;padding:10px;}
+    .waitlist-form input[type=email]{padding:12px 16px;}
+    .waitlist-form button{width:100%;}
+    .dna-pattern{display:none;}
+    .hero-visual{padding:48px 28px 40px;min-height:300px;}
+    .stack-item{padding:24px;margin-bottom:-28px;}
+    .stack-item:last-child{margin-bottom:0;}
+  }
 </style>
 </head>
 <body>
 
 <header>
+  <a href="#top" class="logo">
+    <span class="logo-mark">S</span>
+    <span class="logo-word">STRAND</span>
+  </a>
   <nav>
-    <a href="#top" class="logo">
-      <span class="logo-mark">S</span>
-      <span class="logo-word">STRAND</span>
-    </a>
-    <a href="#waitlist" class="nav-cta">Join waitlist</a>
+    <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
   </nav>
 </header>
 
 <main id="top">
   <section class="hero">
-    <div class="hero-grid">
-      <div class="hero-inner">
-        <span class="eyebrow">Private beta &middot; opening soon</span>
-        <h1>Track every strand.<br>Build every habit.</h1>
-        <p class="sub">STRAND is a quiet, focused habit tracker built around your hair care routine: the products you use, the rituals you keep, and the progress you can actually see.</p>
-
-        <form class="waitlist-form" id="waitlistForm" novalidate>
-          <input type="email" id="emailInput" name="email" placeholder="you@email.com" autocomplete="email" required>
-          <button type="submit">Get early access</button>
-        </form>
-        <p class="form-error" id="formError">Enter a valid email to join the waitlist.</p>
-        <p class="form-note" id="formNote">No spam. One email the day we open access.</p>
-        <div class="form-success" id="formSuccess">You're on the list. We'll email you the moment STRAND opens up.</div>
+    <div class="hero-visual">
+      <div class="dna-pattern" aria-hidden="true">
+        <div class="shape"></div>
+        <div class="shape alt"></div>
+        <div class="shape"></div>
+        <div class="shape alt"></div>
+        <div class="shape accent"></div>
+        <div class="shape"></div>
+        <div class="shape alt"></div>
+        <div class="shape"></div>
+        <div class="shape alt"></div>
       </div>
+      <h1>Track every strand.<br>Build every habit.</h1>
+    </div>
+    <div class="hero-content">
+      <span class="pill-label">Private beta · opening soon</span>
+      <h2>A quiet habit tracker built around your hair care routine.</h2>
+      <p class="sub">The products you use, the rituals you keep, and the progress you can actually see, in one place.</p>
+      <form class="waitlist-form" id="waitlistForm" novalidate>
+        <input type="email" id="emailInput" name="email" placeholder="you@email.com" autocomplete="email" required>
+        <button type="submit">Get early access</button>
+      </form>
+      <p class="form-error" id="formError">Enter a valid email to join the waitlist.</p>
+      <p class="form-note" id="formNote">No spam. One email the day we open access.</p>
+      <div class="form-success" id="formSuccess">You're on the list. We'll email you the moment STRAND opens up.</div>
+    </div>
+  </section>
 
-      <div class="phone-scene">
-        <div class="phone phone-front">
-          <span class="phone-btn mute"></span>
-          <span class="phone-btn vol-up"></span>
-          <span class="phone-btn vol-down"></span>
-          <span class="phone-btn power"></span>
-          <div class="phone-body">
-            <div class="phone-screen">
-              <img src="mockups/wash-claire.png" alt="STRAND home screen greeting Claire, with a log wash day prompt">
-              <span class="island"></span>
-            </div>
-          </div>
+  <section class="section-grid">
+    <div class="data-card">
+      <span class="pill-label">Routine consistency</span>
+      <div class="growth-metric">28<span> day streak</span></div>
+      <p style="color:var(--cb-500);margin-top:6px;font-size:13.5px;">Habits logged vs. weeks of quiet drift</p>
+      <div class="chart-container" aria-hidden="true">
+        <svg viewBox="0 0 400 200" class="line-growth" preserveAspectRatio="none">
+          <path d="M0,180 Q100,160 200,100 T400,20" stroke="#85ad95" stroke-width="3" fill="none"></path>
+          <path d="M0,190 Q100,185 200,160 T400,120" stroke="#708f7d" stroke-dasharray="8,4" stroke-opacity="0.45" fill="none"></path>
+          <line x1="280" y1="0" x2="280" y2="200" stroke="#43564b" stroke-width="1"></line>
+        </svg>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:24px;flex-wrap:wrap;">
+        <span class="pill-label" style="display:flex;align-items:center;gap:8px;margin:0;">
+          <span class="legend-dot" style="background:var(--ev-400);"></span> Active routine
+        </span>
+        <span class="pill-label" style="display:flex;align-items:center;gap:8px;margin:0;">
+          <span class="legend-dot" style="background:var(--cb-600);"></span> Missed check-ins
+        </span>
+      </div>
+    </div>
+
+    <div class="user-feed">
+      <span class="pill-label">What people track</span>
+      <div class="user-row">
+        <div class="avatar">WD</div>
+        <div class="user-info">
+          <h4>Wash day log</h4>
+          <p>Condition tags, products, notes</p>
         </div>
-        <div class="phone phone-back">
-          <span class="phone-btn mute"></span>
-          <span class="phone-btn vol-up"></span>
-          <span class="phone-btn vol-down"></span>
-          <span class="phone-btn power"></span>
-          <div class="phone-body">
-            <div class="phone-screen">
-              <img src="mockups/log-wash.png" alt="STRAND log wash day screen with condition tags and product fields">
-              <span class="island"></span>
-            </div>
-          </div>
+        <div class="tag">Ritual</div>
+      </div>
+      <div class="user-row">
+        <div class="avatar" style="background:var(--mv-900);border-color:var(--mv-800);color:var(--mv-200);">PS</div>
+        <div class="user-info">
+          <h4>Product shelf</h4>
+          <p>Scan barcodes, save what works</p>
         </div>
+        <div class="tag">Shelf</div>
+      </div>
+      <div class="user-row">
+        <div class="avatar" style="background:var(--ev-800);border-color:var(--ev-700);color:var(--ev-200);">PJ</div>
+        <div class="user-info">
+          <h4>Photo journal</h4>
+          <p>Progress side-by-side over time</p>
+        </div>
+        <div class="tag">Journal</div>
+      </div>
+      <div class="user-row" style="border:none;">
+        <div class="avatar">RM</div>
+        <div class="user-info">
+          <h4>Reminders</h4>
+          <p>Gentle nudges timed to your schedule</p>
+        </div>
+        <div class="tag">Nudge</div>
       </div>
     </div>
   </section>
 
-  <section class="features">
-    <div class="wrap">
-      <div class="features-head">
-        <span class="eyebrow">What you get</span>
-        <h2>Everything your routine needed, in one place</h2>
+  <section class="section-grid" style="padding-top:0;">
+    <div class="feature-stack">
+      <span class="pill-label">What you get</span>
+      <div class="stack-item">
+        <div class="stack-item-tab"></div>
+        <div>
+          <h4>Daily rituals & streaks</h4>
+          <p class="stack-desc">Log wash days, deep conditioning, and every daily habit.</p>
+        </div>
+        <div class="stack-num">01</div>
       </div>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          </div>
-          <h3>Daily rituals & streaks</h3>
-          <p>Log wash days, deep conditioning, and every daily habit, then watch your insights grow as consistency builds.</p>
+      <div class="stack-item accent">
+        <div class="stack-item-tab"></div>
+        <div>
+          <h4>Scan & save products</h4>
+          <p class="stack-desc">Point your camera at a barcode and build a shelf you trust.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 11h18"/></svg>
-          </div>
-          <h3>Scan & save products</h3>
-          <p>Point your camera at a barcode to save what you're using, track how it performs, and build a product shelf you can actually trust.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
-          </div>
-          <h3>Photo journal</h3>
-          <p>Capture your hair's progress over time in a private journal, side by side with the habits and products behind the change.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#85ad95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          </div>
-          <h3>Reminders that fit</h3>
-          <p>Gentle nudges timed to your routine, not a generic schedule, so wash day never quietly slips.</p>
-        </div>
+        <div class="stack-num">02</div>
       </div>
+      <div class="stack-item dark">
+        <div class="stack-item-tab"></div>
+        <div>
+          <h4>Photo journal</h4>
+          <p class="stack-desc">Capture progress next to the habits and products behind it.</p>
+        </div>
+        <div class="stack-num">03</div>
+      </div>
+    </div>
+
+    <div class="precision-copy" style="display:flex;flex-direction:column;justify-content:center;">
+      <h3>Everything your routine needed, in one place.</h3>
+      <p>STRAND brings wash days, products, photos, and reminders together so you can see, not guess, what's actually working for your hair.</p>
     </div>
   </section>
 
-  <section class="how">
-    <div class="wrap how-inner">
-      <h2>How it works</h2>
-      <div class="step-row">
-        <div class="step-num">01</div>
-        <div class="step-text">
-          <h3>Set up your routine</h3>
-          <p>Tell STRAND what your hair needs (wash frequency, products, daily habits) and it builds your habit list around it.</p>
+  <section class="section-grid" id="how" style="padding-top:0;">
+    <div style="grid-column:1/-1;max-width:720px;margin:0 auto;width:100%;">
+      <h2 style="text-align:center;font-size:clamp(26px,4.5vw,36px);margin-bottom:40px;">How it works</h2>
+      <div style="display:flex;gap:20px;padding:24px 0;border-top:.5px solid var(--cb-800);">
+        <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--ev-500);flex-shrink:0;width:46px;">01</div>
+        <div>
+          <h3 style="font-size:16px;font-weight:400;margin-bottom:6px;">Set up your routine</h3>
+          <p style="font-size:13.5px;color:var(--cb-500);max-width:520px;">Tell STRAND what your hair needs, wash frequency, products, daily habits, and it builds your habit list around it.</p>
         </div>
       </div>
-      <div class="step-row">
-        <div class="step-num">02</div>
-        <div class="step-text">
-          <h3>Check in as you go</h3>
-          <p>Mark habits done, scan a new product, or drop in a quick photo. It takes seconds and it's built to fit around your day.</p>
+      <div style="display:flex;gap:20px;padding:24px 0;border-top:.5px solid var(--cb-800);">
+        <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--ev-500);flex-shrink:0;width:46px;">02</div>
+        <div>
+          <h3 style="font-size:16px;font-weight:400;margin-bottom:6px;">Check in as you go</h3>
+          <p style="font-size:13.5px;color:var(--cb-500);max-width:520px;">Mark habits done, scan a new product, or drop in a quick photo. It takes seconds and fits around your day.</p>
         </div>
       </div>
-      <div class="step-row">
-        <div class="step-num">03</div>
-        <div class="step-text">
-          <h3>Watch the pattern form</h3>
-          <p>Streaks, stats, and your journal come together so you can see, not guess, what's actually working for your hair.</p>
+      <div style="display:flex;gap:20px;padding:24px 0;border-top:.5px solid var(--cb-800);border-bottom:.5px solid var(--cb-800);">
+        <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--ev-500);flex-shrink:0;width:46px;">03</div>
+        <div>
+          <h3 style="font-size:16px;font-weight:400;margin-bottom:6px;">Watch the pattern form</h3>
+          <p style="font-size:13.5px;color:var(--cb-500);max-width:520px;">Streaks, stats, and your journal come together so you can see what's actually working.</p>
         </div>
       </div>
     </div>
