@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STRAND Privacy Policy</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: #0d0c0b; color: #e8e2d9; line-height: 1.6; }
+    main { max-width: 40rem; margin: 0 auto; padding: 32px 20px 64px; }
+    a { color: #c4a484; }
+    h1 { font-weight: 400; font-size: 2rem; letter-spacing: -0.02em; }
+    h2 { font-weight: 400; font-size: 1.15rem; margin-top: 2rem; }
+    p, li { color: #c9c2b8; font-size: 1rem; }
+    .meta { font-family: ui-monospace, monospace; font-size: 12px; color: #8a8378; letter-spacing: .04em; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="meta">STRAND · Last updated 1 September 2026</p>
+    <h1>Privacy Policy</h1>
+    <p>STRAND is a hair wash-day tracker. This policy describes what we collect, why, and how to delete it. It applies to the STRAND website, PWA, and iOS app.</p>
+
+    <h2>Who we are</h2>
+    <p>STRAND is built by a solo developer. Questions, support, or deletion requests: <a href="/support.html">Support</a>, use <strong>Feedback</strong> in the app, or email <a href="mailto:hello@strandhair.app">hello@strandhair.app</a> from the address on your account.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>Account:</strong> email, password (stored by our auth provider, not in readable form), and the name you enter. Guest mode creates a device-linked account without email until you choose to save progress.</li>
+      <li><strong>Hair profile:</strong> type, porosity, density, length, goals, and wash frequency. These stay in your private account. We do not send them to Mixpanel.</li>
+      <li><strong>Routines:</strong> wash logs, products, habits, weekly goals, and optional notes.</li>
+      <li><strong>Photos:</strong> pictures you add to your hair journal. These stay in your private account storage and are not public. Guest accounts can store up to 10 photos; email accounts can store up to 50.</li>
+      <li><strong>Device:</strong> camera (journal photos and product barcodes) and photo library (choosing an existing photo). We do not save photos back to your system library.</li>
+      <li><strong>Notifications:</strong> a push subscription for your device if you turn reminders on in the web app or PWA. The iOS App Store app does not currently send push reminders.</li>
+      <li><strong>Product scans:</strong> barcodes are looked up with Open Beauty Facts to fill in a product name. Names you confirm, if you have an email account, may be stored in a shared product cache so later scans can fill faster. That cache is not tied to your email. Guest accounts cannot write to the shared cache.</li>
+    </ul>
+
+    <h2>Analytics</h2>
+    <p>If you agree to this policy, we use Mixpanel to understand whether the app is useful (screens viewed, wash days logged, habits completed). We identify analytics with your account ID and first name. We do <strong>not</strong> send your email, hair-profile fields, or photos to Mixpanel. Mixpanel may record a session replay for a small sample of sessions (about 5%) so we can see where people get stuck; photos, video, and typed input (including passwords) are blocked or masked in those recordings. We ask Mixpanel not to use your IP address to infer location. Vercel Analytics measures aggregate site traffic.</p>
+    <p>Guest tracking does not start analytics until you agree to this policy on the welcome screen. Creating or signing into an email account also means you agree to this policy.</p>
+
+    <h2>Who processes data</h2>
+    <ul>
+      <li>Supabase (authentication, database, and private photo storage)</li>
+      <li>Mixpanel (product analytics, after you agree)</li>
+      <li>Vercel (hosting the website)</li>
+      <li>Open Beauty Facts (optional barcode lookup)</li>
+      <li>Tally (optional feedback form you choose to open)</li>
+    </ul>
+    <p>We do not sell your personal information. We do not use your data for third-party advertising.</p>
+
+    <h2>Photos and sensitive information</h2>
+    <p>Journal photos may show your hair, scalp, or face. Treat them as personal. They are stored privately and shown only to you when you are signed in. STRAND does not keep a separate medical or treatment log. If you name a habit after a product (for example minoxidil), that label is stored as routine text you entered, not as a health record. App Store nutrition labels should include Photos; include Health &amp; Fitness only if you later add dedicated treatment tracking.</p>
+
+    <h2>Retention and deletion</h2>
+    <p>We keep your data while your account exists. In the app, go to Profile → Settings → Delete account. That removes your login, profile, logs, photos, and Mixpanel people profile. Product names you contributed to the shared scan cache may remain with your account id removed. Mixpanel event history may be retained according to Mixpanel’s project settings after the people profile is deleted. You can also request deletion through Feedback or by emailing hello@strandhair.app.</p>
+
+    <h2>Your choices</h2>
+    <ul>
+      <li>You can use STRAND without camera, photo library, or notifications — those permissions are optional features.</li>
+      <li>You can sign out at any time.</li>
+      <li>Download a copy of your account data from Profile → Settings → Download my data, or email hello@strandhair.app.</li>
+      <li>If you are in a region with access or deletion rights (including GDPR/CCPA-style rights), use Download my data, Delete account, Feedback, or email and we will honor a verified request.</li>
+    </ul>
+
+    <h2>Children</h2>
+    <p>You must be 13 or older to use STRAND. We ask you to confirm that on the welcome screen and when you create an account. We do not knowingly collect data from children under 13. If we learn that we have, we will delete it.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes in a material way, we will update the date above. Continued use after an update means you accept the revised policy.</p>
+
+    <p><a href="/">← Back to STRAND</a> · <a href="/terms.html">Terms of Use</a> · <a href="/support.html">Support</a></p>
+  </main>
+</body>
+</html>
